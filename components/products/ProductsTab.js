@@ -2,17 +2,11 @@
 
 import Link from "next/link";
 import Product from "./Product";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 export default function ProductsTab({ tabList, tabPanel }) {
   const [activeTab, setActiveTab] = useState(0);
-  useEffect(() => {
-    // async function getTabPanel() {
-    //   const tabPanel = await getFetch("/products/products-tabs");
-    //   return tabPanel;
-    // }
-    // getTabPanel();
-  }, [activeTab]);
+
   return (
     <section className="food_section layout_padding-bottom">
       <div className="container">
@@ -23,9 +17,7 @@ export default function ProductsTab({ tabList, tabPanel }) {
         <ul className="filters_menu">
           {tabList.map((item, index) => (
             <li
-              className={`px-4 py-2 ${
-                activeTab === index ? "text-primary" : "text-success"
-              }`}
+              className={`px-4 py-2 ${activeTab === index ? "active" : ""}`}
               onClick={() => setActiveTab(index)}
               key={index}
             >
@@ -35,13 +27,11 @@ export default function ProductsTab({ tabList, tabPanel }) {
         </ul>
 
         <div className="filters-content">
-          {tabPanel.map((tabPanelItem, index) => (
-            <div key={index} className="row grid">
-              {tabPanelItem.map((product) => (
-                <Product key={product.id} product={product} />
-              ))}
-            </div>
-          ))}
+          <div className="row grid">
+            {tabPanel[activeTab].map((tabPanelItem) => (
+              <Product key={tabPanelItem.id} product={tabPanelItem} />
+            ))}
+          </div>
         </div>
       </div>
       <div className="btn-box">
@@ -50,6 +40,14 @@ export default function ProductsTab({ tabList, tabPanel }) {
     </section>
   );
 }
+
+
+
+   {/* // <div key={index} className="row"></div> */}
+            {/* {tabPanelItem.map((product) => ( */}
+            {/* ))} */}
+            {/* </div> */}
+
 
 {
   /* <div className="row grid"> */
