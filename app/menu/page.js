@@ -1,6 +1,7 @@
 import CategoriesList from "@/components/menu/CategoriesList";
 import Loading from "@/components/menu/Loading";
 import ProductList from "@/components/menu/ProductList";
+import Search from "@/components/menu/Search";
 import { getFetch } from "@/utils/fetch";
 import { Suspense } from "react";
 
@@ -13,19 +14,7 @@ export default async function MenuPage({ searchParams }) {
       <div className="container">
         <div className="row">
           <div className="col-sm-12 col-lg-3">
-            <div>
-              <label className="form-label">جستجو</label>
-              <div className="input-group mb-3">
-                <input
-                  type="text"
-                  className="form-control"
-                  placeholder="نام محصول ..."
-                />
-                <a href="#" className="input-group-text">
-                  <i className="bi bi-search"></i>
-                </a>
-              </div>
-            </div>
+            <Search />
             <hr />
             <CategoriesList categories={categories} />
             <hr />
