@@ -15,4 +15,8 @@ function handleError(message) {
   return message;
 }
 
-export { getBlurDataURL, numberFormat, handleError };
+function salePercent(price, sale_price) {
+  return Math.round(((price - salePrice) / price) * 100);
+}
+
+export { getBlurDataURL, numberFormat, handleError, salePercent };

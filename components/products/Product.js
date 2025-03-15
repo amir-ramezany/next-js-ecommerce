@@ -1,8 +1,9 @@
 import { getBlurDataURL, numberFormat } from "@/utils/helper";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function Product({ product }) {
-  const { name, description, primary_image, is_sale, price, sale_price } =
+  const { name, description, primary_image, is_sale, price, sale_price, slug } =
     product;
   return (
     <div className="col-sm-6 col-lg-4">
@@ -24,7 +25,9 @@ export default function Product({ product }) {
             />
           </div>
           <div className="detail-box">
-            <h5>{name}</h5>
+            <h5>
+              <Link href={`products/${slug}`}>{name}</Link>
+            </h5>
             <p>{description}</p>
             <div className="options">
               {is_sale ? (
