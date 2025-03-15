@@ -2,21 +2,6 @@
 import { postFetch } from "@/utils/fetch";
 import { handleError } from "@/utils/helper";
 
-// const handleError = (message) => {
-//   if (typeof message === "object") {
-//     const errors = [];
-//     Object.keys(message).map((key) => {
-//       message[key].map((e) => {
-//         errors.push(e);
-//       });
-//     });
-
-//     return errors.join();
-//   }
-
-//   return message;
-// };
-
 async function create(state, formData) {
   const name = formData.get("name");
   const email = formData.get("email");
