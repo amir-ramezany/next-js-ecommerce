@@ -1,12 +1,16 @@
 "use server";
 
-function login(stateLogin, formData) {
+import { postFetch } from "@/utils/fetch";
+import { handleError } from "@/utils/helper";
+import { cookies } from "next/headers";
+
+async function login(stateLogin, formData) {
   const phoneNumber = formData.get("cellphone");
 
   if (phoneNumber === "") {
     return {
       status: "error",
-      message: "شماره موبایا الزامی است.",
+      message: "شماره موبایل الزامی است.",
     };
   }
   const pattern = /^(\+98|0)?9\d{9}$/;
@@ -16,6 +20,75 @@ function login(stateLogin, formData) {
       message: "فرمت شماره موبایل معتبر نیست.",
     };
   }
+  const data = await postFetch("/auth/login", { cellphone: phoneNumber });
+  if (data.status === "success") {
+    cookies().set({
+      name: "login_token",
+      value: data.data.login_token,
+      httpOnly: true,
+      path: "/",
+      maxAge: 60 * 60 * 24 * 7, //seconsds //1 week
+    });
+    return {
+      status: data.status,
+      message: "کد تایید با موفقیت ارسال شد.",
+    };
+  } else {
+    return {
+      status: data.status,
+      message: handleError(data.message),
+    };
+  }
 }
 
-export { login };
+async function checkOtp(stateCheckOtp, formData) {
+  const otp = formData.get("otp");
+  if (otp === "") {
+    return {
+      status: "error",
+      message: "ورود کد تایید الزامی است ",
+    };
+  }
+  const pattern = /^[0-9]{6}$/;
+  if (!pattern.test(otp)) {
+    return {
+      status: "error",
+      message: "کد ورود معتبر نیست.",
+    };
+  }
+
+  const loginToken = cookies().get("login_token");
+  if (!loginToken) {
+    return {
+      status: "error",
+      message: "توکن ورودی شما معتبر نیست. یکبار دیگر تلاش کنید",
+    };
+  }
+
+  const data = await postFetch("/auth/check-otp", {
+    otp,
+    login_token: loginToken.value,
+  });
+  if (data?.status === "success") {
+    cookies().delete("login_token");
+    cookies().set({
+      name: "token",
+      value: data.data.token,
+      httpOnly: true,
+      path: "/",
+      maxAge: 60 * 60 * 24 * 7, //seconsds //1 week
+    });
+    return {
+      status: data.status,
+      message: "با موفقیت وارد شدید.",
+      user: data.data.user,
+    };
+  } else {
+    return {
+      status: data.status,
+      message: "کد ورود صحیح نمی باشد .",
+    };
+  }
+}
+
+export { login, checkOtp };

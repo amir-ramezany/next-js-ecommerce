@@ -1,18 +1,11 @@
 "use client";
 
-import { login } from "@/actions/auth";
-import SubmitButton from "@/components/SubmitButton";
-import { useEffect } from "react";
-import { useFormState } from "react-dom";
-import { toast } from "react-toastify";
+import CheckOtpForm from "@/components/auth/CheckOtpForm";
+import LoginForm from "@/components/auth/LoginForm";
+import { useState } from "react";
 
 export default function LoginPage() {
-  const [stateLogin, formActionLogin] = useFormState(login, {});
-
-  useEffect(() => {
-    toast(stateLogin?.message, { type: stateLogin?.status });
-  }, [stateLogin]);
-
+  const [step, setStep] = useState(0); // 0 -> loginform card  //1 -> otpform card
   return (
     <section className="auth_section book_section">
       <div className="container">
@@ -46,24 +39,8 @@ export default function LoginPage() {
               </div>
             </div> */}
             <div className="card">
-              <div className="card-body">
-                <div className="form_container">
-                  <form action={formActionLogin}>
-                    <div className="mb-3">
-                      <label className="form-label">شماره موبایل</label>
-                      <input
-                        name="cellphone"
-                        type="text"
-                        className="form-control"
-                      />
-                    </div>
-                    <SubmitButton
-                      title="ورود"
-                      style="btn btn-primary btn-auth"
-                    />
-                  </form>
-                </div>
-              </div>
+              {step === 0 && <LoginForm setStep={setStep} />}
+              {step === 1 && <CheckOtpForm />}
             </div>
           </div>
         </div>
