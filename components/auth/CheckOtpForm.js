@@ -2,14 +2,19 @@
 
 import { checkOtp } from "@/actions/auth";
 import SubmitButton from "@/components/SubmitButton";
-import { useEffect } from "react";
+import { authConext } from "@/context/AuthContext";
+import { useContext, useEffect } from "react";
 import { useFormState } from "react-dom";
 import { toast } from "react-toastify";
 export default function CheckOtpForm() {
   const [stateOtp, formActionOtp] = useFormState(checkOtp, {});
+  const { loginContext } = useContext(authConext);
 
   useEffect(() => {
     toast(stateOtp?.message, { type: stateOtp?.status });
+    if (stateOtp?.status === "success") {
+      loginContext(stateOtp.user);
+    }
   }, [stateOtp]);
 
   return (
