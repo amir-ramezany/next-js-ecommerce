@@ -16,13 +16,14 @@ const getFetch = async (url) => {
   }
 };
 
-const postFetch = async (url, body) => {
+const postFetch = async (url, body, headers = {}) => {
   const res = await fetch(baseUrl + url, {
     method: "POST",
     cache: "no-store",
     headers: {
       "Content-Type": "application/json",
       Accept: "application/json",
+      ...headers,
     },
     body: JSON.stringify(body),
   });

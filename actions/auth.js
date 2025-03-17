@@ -91,4 +91,27 @@ async function checkOtp(stateCheckOtp, formData) {
   }
 }
 
-export { login, checkOtp };
+async function me() {
+  const token = cookies().get("token");
+  if (!token) {
+    return {
+      error: "not authorized",
+    };
+  }
+  const data = await postFetch(
+    "/auth/me",
+    {},
+    { Authorization: `Bearer ${token.value}` }
+  );
+  if (data?.status === "success") {
+    return {
+      user: data.data,
+    };
+  } else {
+    return {
+      error: "User Forbidden",
+    };
+  }
+}
+
+export { login, checkOtp, me };
