@@ -1,11 +1,12 @@
 const baseUrl = "http://localhost:8000/api";
 
-const getFetch = async (url) => {
+const getFetch = async (url, headers = {}) => {
   const res = await fetch(baseUrl + url, {
     cache: "no-store",
     headers: {
       "Content-Type": "application/json",
       Accept: "application/json",
+      ...headers,
     },
   });
   const data = await res.json();
