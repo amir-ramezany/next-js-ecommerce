@@ -1,11 +1,21 @@
 import CreateForm from "@/components/profile/addresses/CreateForm";
+import { getFetch } from "@/utils/fetch";
+import { cookies } from "next/headers";
 
-export default function AddressesPage() {
+export default async function AddressesPage() {
+  const token = cookies().get("token");
+  const { addresses, provinces, cities } = await getFetch(
+    "/profile/addresses",
+    {
+      Authorization: `Bearer ${token.value}`,
+    }
+  );
+
   return (
     <>
-      <CreateForm />
+      <CreateForm provinces={provinces} cities={cities} />
       <hr />
-      <div class="card card-body">
+      {/* <div class="card card-body">
         <div class="row g-4">
           <div class="col col-md-6">
             <label class="form-label">عنوان</label>
@@ -49,7 +59,7 @@ export default function AddressesPage() {
           <button class="btn btn-primary">ویرایش</button>
           <button class="btn btn-dark">حذف</button>
         </div>
-      </div>
+      </div> */}
       {/* <hr />
         <div class="card card-body">
           <div class="row g-4">
