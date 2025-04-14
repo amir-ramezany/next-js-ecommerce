@@ -1,6 +1,7 @@
 "use server";
 import { postFetch } from "@/utils/fetch";
 import { handleError } from "@/utils/helper";
+import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
 
 async function editInfo(state, formData) {
@@ -95,6 +96,7 @@ async function createAddress(state, formData) {
     { Authorization: `Bearer ${token.value}` }
   );
   if (data.status === "success") {
+    revalidatePath("/profile/addresses");
     return {
       status: data.status,
       message: "ثبت آدرس با موفقیت انجام شد",
@@ -183,5 +185,35 @@ async function editAddress(state, formData) {
     };
   }
 }
+async function deleteAddress(state, formData) {
+  const address_id = formData.get("address_id");
 
-export { editInfo, createAddress, editAddress };
+  if (address_id === null || address_id === "") {
+    return {
+      status: "error",
+      message: "شناسه آدرس الزامی است.",
+    };
+  }
+
+  const token = cookies().get("token");
+  const data = await postFetch(
+    "/profile/addresses/delete",
+    {
+      address_id,
+    },
+    { Authorization: `Bearer ${token.value}` }
+  );
+  if (data.status === "success") {
+    revalidatePath("/profile/addresses");
+    return {
+      status: data.status,
+      message: "حذف آدرس با موفقیت انجام شد",
+    };
+  } else {
+    return {
+      status: data.status,
+      message: handleError(data.message),
+    };
+  }
+}
+export { editInfo, createAddress, editAddress, deleteAddress };
