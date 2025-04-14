@@ -54,6 +54,7 @@ export default function FormContact() {
             placeholder="متن پیام"
           ></textarea>
         </div>
+
         <SubmitButton title="ارسال پیام" />
       </form>
     </div>

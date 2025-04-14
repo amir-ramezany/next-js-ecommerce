@@ -113,6 +113,14 @@ async function editAddress(state, formData) {
   const province_id = formData.get("province_id");
   const city_id = formData.get("city_id");
   const address = formData.get("address");
+  const address_id = formData.get("address_id");
+
+  if (address_id === null || address_id === "") {
+    return {
+      status: "error",
+      message: "شناسه آدرس الزامی است.",
+    };
+  }
 
   if (title === "") {
     return {
@@ -151,7 +159,7 @@ async function editAddress(state, formData) {
 
   const token = cookies().get("token");
   const data = await postFetch(
-    "/profile/addresses/create",
+    "/profile/addresses/edit",
     {
       title,
       cellphone,
@@ -159,13 +167,14 @@ async function editAddress(state, formData) {
       province_id,
       city_id,
       address,
+      address_id,
     },
     { Authorization: `Bearer ${token.value}` }
   );
   if (data.status === "success") {
     return {
       status: data.status,
-      message: "ثبت آدرس با موفقیت انجام شد",
+      message: "ویرایش آدرس با موفقیت انجام شد",
     };
   } else {
     return {

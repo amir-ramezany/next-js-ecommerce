@@ -4,6 +4,7 @@ import { editAddress } from "@/actions/profile";
 import SubmitButton from "@/components/SubmitButton";
 import { useEffect, useState } from "react";
 import { useFormState } from "react-dom";
+import { toast } from "react-toastify";
 
 export default function EditForm({ address, cities, provinces }) {
   const [citiesFilter, setCitiesFilter] = useState(
@@ -89,10 +90,11 @@ export default function EditForm({ address, cities, provinces }) {
               className="form-control"
             ></textarea>
           </div>
+          <input type="hidden" name="address_id" value={address.id} />
         </div>
         <div className="d-flex justify-content-between mt-4">
           <SubmitButton title="ویرایش" style="btn btn-primary mt-4" />
-          <button type="submit" className="btn btn-dark">
+          <button type="submit" className="btn btn-dark mt-4">
             حذف
           </button>
         </div>
