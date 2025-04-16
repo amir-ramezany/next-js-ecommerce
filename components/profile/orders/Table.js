@@ -1,10 +1,12 @@
 import { getFetch } from "@/utils/fetch";
-import { numberFormat } from "@/utils/helper";
+import { getBlurDataURL, numberFormat } from "@/utils/helper";
 import { cookies } from "next/headers";
+import Image from "next/image";
+import Paginate from "./Paginate";
 
-export default async function Table() {
+export default async function Table({ params }) {
   const token = cookies().get("token");
-  const data = await getFetch("/profile/orders", {
+  const data = await getFetch(`/profile/orders?${params}`, {
     Authorization: `Bearer ${token.value}`,
   });
 
@@ -46,16 +48,16 @@ export default async function Table() {
                     type="button"
                     className="btn btn-primary"
                     data-bs-toggle="modal"
-                    data-bs-target="#modal-1"
+                    data-bs-target={`#modal-${order.id}`}
                   >
                     محصولات
                   </button>
-                  <div className="modal fade" id="modal-1">
+                  <div className="modal fade" id={`modal-${order.id}`}>
                     <div className="modal-dialog modal-lg">
                       <div className="modal-content">
                         <div className="modal-header">
                           <h6 className="modal-title">
-                            محصولات سفارش شماره 25
+                            محصولات سفارش شماره {order.id}
                           </h6>
                           <button
                             type="button"
@@ -76,32 +78,26 @@ export default async function Table() {
                               </tr>
                             </thead>
                             <tbody>
-                              <tr>
-                                <th>
-                                  <img
-                                    src="../images/b1.jpg"
-                                    width="80"
-                                    alt=""
-                                  />
-                                </th>
-                                <td className="fw-bold">برگر گوشت ذغالی</td>
-                                <td>45,000 تومان</td>
-                                <td>2</td>
-                                <td>90,000 تومان</td>
-                              </tr>
-                              <tr>
-                                <th>
-                                  <img
-                                    src="../images/p1.jpg"
-                                    width="80"
-                                    alt=""
-                                  />
-                                </th>
-                                <td className="fw-bold">پیتزا پپرونی</td>
-                                <td>145,000 تومان</td>
-                                <td>1</td>
-                                <td>145,000 تومان</td>
-                              </tr>
+                              {order.order_items.map((item) => (
+                                <tr key={item.id}>
+                                  <th>
+                                    <Image
+                                      src={item.product_primary_image}
+                                      width={80}
+                                      height={53}
+                                      alt="product-image"
+                                      placeholder="blur"
+                                      blurDataURL={getBlurDataURL()}
+                                    />
+                                  </th>
+                                  <td className="fw-bold">
+                                    {item.product_name}
+                                  </td>
+                                  <td>{numberFormat(item.price)} تومان</td>
+                                  <td>{item.quantity}</td>
+                                  <td>{numberFormat(item.subtotal)} تومان</td>
+                                </tr>
+                              ))}
                             </tbody>
                           </table>
                         </div>
@@ -114,25 +110,8 @@ export default async function Table() {
           </tbody>
         </table>
       </div>
-      <nav className="d-flex justify-content-center mt-5">
-        <ul className="pagination">
-          <li className="page-item active">
-            <a className="page-link" href="#">
-              1
-            </a>
-          </li>
-          <li className="page-item">
-            <a className="page-link" href="#">
-              2
-            </a>
-          </li>
-          <li className="page-item">
-            <a className="page-link" href="#">
-              3
-            </a>
-          </li>
-        </ul>
-      </nav>
+
+      <Paginate links={data.meta.links} />
     </>
   );
 }
