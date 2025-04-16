@@ -14,7 +14,7 @@ export default function Layout({ children }) {
                 <Link href="/profile/addresses">آدرس ها</Link>
               </li>
               <li className="list-group-item">
-                <a href="./orders.html">سفارشات</a>
+                <Link href="/profile/orders">سفارشات</Link>
               </li>
               <li className="list-group-item">
                 <Link href="/profile/transactions">تراکنش ها</Link>
