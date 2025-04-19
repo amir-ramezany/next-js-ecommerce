@@ -1,15 +1,16 @@
 import { getFetch } from "@/utils/fetch";
-import { getBlurDataURL, numberFormat } from "@/utils/helper";
+import { numberFormat } from "@/utils/helper";
 import { cookies } from "next/headers";
-import Image from "next/image";
 import Paginate from "./Paginate";
 
 export default async function Table({ params }) {
   const token = cookies().get("token");
+  // const data = await getFetch(`/profile/transactions?${params}`, {
+  //   Authorization: `Bearer ${token.value}`,
+  // });
   const data = await getFetch(`/profile/transactions?${params}`, {
     Authorization: `Bearer ${token.value}`,
   });
-
   return (
     <>
       <div className="table-responsive">

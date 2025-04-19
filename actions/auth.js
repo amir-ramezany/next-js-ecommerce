@@ -114,4 +114,29 @@ async function me() {
   }
 }
 
-export { login, checkOtp, me };
+async function logout() {
+  const token = cookies().get("token");
+  if (!token) {
+    return {
+      error: "not authorized",
+    };
+  }
+
+  const data = await postFetch(
+    "/auth/logout",
+    {},
+    { Authorization: `Bearer ${token.value}` }
+  );
+  if (data?.status === "success") {
+    cookies().delete("token");
+    return {
+      success: "از حساب کاربری خود خارج شدید.",
+    };
+  } else {
+    return {
+      error: "User Forbidden",
+    };
+  }
+}
+
+export { login, checkOtp, me, logout };

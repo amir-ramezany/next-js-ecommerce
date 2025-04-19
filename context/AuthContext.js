@@ -23,8 +23,12 @@ export default function AuthConextProvider({ children }) {
     setUser(user);
   }
 
+  function logoutContext() {
+    setUser(null);
+  }
+
   return (
-    <authConext.Provider value={{ user, loginContext }}>
+    <authConext.Provider value={{ user, loginContext, logoutContext }}>
       {children}
     </authConext.Provider>
   );
