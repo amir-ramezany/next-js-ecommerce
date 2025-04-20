@@ -2,6 +2,7 @@
 
 import { postFetch } from "@/utils/fetch";
 import { handleError } from "@/utils/helper";
+// import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
 
 async function login(stateLogin, formData) {
@@ -130,11 +131,13 @@ async function logout() {
   if (data?.status === "success") {
     cookies().delete("token");
     return {
-      success: "از حساب کاربری خود خارج شدید.",
+      status: data.status,
+      message: "از حساب کاربری خود خارج شدید.",
     };
   } else {
     return {
-      error: "User Forbidden",
+      status: data.status,
+      message: "User Forbidden",
     };
   }
 }
