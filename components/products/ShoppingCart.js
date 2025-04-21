@@ -3,6 +3,7 @@
 import { addToCart, removeFromCart } from "@/redux/slices/cartSlice";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
+import { toast } from "react-toastify";
 
 export default function ShoppingCart({ product }) {
   const [quantity, setQuantity] = useState(0);
@@ -10,6 +11,7 @@ export default function ShoppingCart({ product }) {
   function handleClick() {
     dispatch(removeFromCart(product.id)); // argument of our reducers is action payload
     dispatch(addToCart({ product, qty: quantity }));
+    toast.success("محصول به سبد خرید اضافه شد");
   }
 
   return (
@@ -30,7 +32,9 @@ export default function ShoppingCart({ product }) {
           disabled={quantity === 0}
           onClick={() => setQuantity((prevQuantity) => prevQuantity - 1)}
           className="minus-btn"
-        ></button>
+        >
+          -
+        </button>
       </div>
     </div>
   );

@@ -5,6 +5,7 @@ import { getBlurDataURL, numberFormat } from "@/utils/helper";
 import Image from "next/image";
 import Link from "next/link";
 import { useDispatch } from "react-redux";
+import { toast } from "react-toastify";
 
 export default function Product({ product }) {
   const { name, description, primary_image, is_sale, price, sale_price, slug } =
@@ -15,6 +16,7 @@ export default function Product({ product }) {
   function handleAddToCart(product) {
     dispatch(removeFromCart(product.id)); // argument of our reducers is action payload
     dispatch(addToCart({ product, qty: 1 }));
+    toast.success("محصول به سبد خرید اضافه شد");
   }
 
   return (
