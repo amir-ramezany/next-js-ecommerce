@@ -1,10 +1,22 @@
+"use client";
+
+import { addToCart, removeFromCart } from "@/redux/slices/cartSlice";
 import { getBlurDataURL, numberFormat } from "@/utils/helper";
 import Image from "next/image";
 import Link from "next/link";
+import { useDispatch } from "react-redux";
 
 export default function Product({ product }) {
   const { name, description, primary_image, is_sale, price, sale_price, slug } =
     product;
+
+  const dispatch = useDispatch();
+
+  function handleAddToCart(product) {
+    dispatch(removeFromCart(product.id)); // argument of our reducers is action payload
+    dispatch(addToCart({ product, qty: 1 }));
+  }
+
   return (
     <div className="col-sm-6 col-lg-4">
       <div className="box">
@@ -40,9 +52,9 @@ export default function Product({ product }) {
                   <span>{numberFormat(price)} تومان</span>
                 </>
               )}
-              <a href="">
+              <button onClick={() => handleAddToCart(product)}>
                 <i className="bi bi-cart-fill text-white fs-5"></i>
-              </a>
+              </button>
             </div>
           </div>
         </div>

@@ -1134,7 +1134,9 @@ a:focus {
   -khtml-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
-  user-select: none;
+  user-select: none; 
+  border: none;
+  outline: none;
 }
 
 .input-counter .minus-btn {
@@ -1156,6 +1158,8 @@ a:focus {
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+  border: none;
+  outline: none;
 }
 
 .input-counter .input-number {
