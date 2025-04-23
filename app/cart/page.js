@@ -1,5 +1,6 @@
 "use client";
 
+import Coupon from "@/components/cart/Coupon";
 import {
   clearCart,
   decrement,
@@ -128,18 +129,7 @@ export default function CartPage() {
                 </div>
 
                 <div className="row mt-4">
-                  <div className="col-12 col-md-6">
-                    <div className="input-group mb-3">
-                      <input
-                        type="text"
-                        className="form-control"
-                        placeholder="کد تخفیف"
-                      />
-                      <button className="input-group-text" id="basic-addon2">
-                        اعمال کد تخفیف
-                      </button>
-                    </div>
-                  </div>
+                  <Coupon />
                   <div className="col-12 col-md-6 d-flex justify-content-end align-items-baseline">
                     <div>انتخاب آدرس</div>
                     <select
