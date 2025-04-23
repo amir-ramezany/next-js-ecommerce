@@ -1,3 +1,5 @@
+"use client";
+
 import { useFormState } from "react-dom";
 import SubmitButton from "../SubmitButton";
 import { checkCoupon } from "@/actions/cart";
@@ -19,7 +21,12 @@ export default function Coupon() {
           className="form-control"
           placeholder="کد تخفیف"
         />
-        <SubmitButton title="اعمال کد تخفیف" style="input-group-text" />
+        <div className="h-100">
+          <SubmitButton title="اعمال کد تخفیف" style="input-group-text" />
+          {/* <button className="input-group-text" type="submit">
+            اعمال کد تخفیف
+          </button> */}
+        </div>
       </div>
     </form>
   );

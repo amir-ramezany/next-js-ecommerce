@@ -9,8 +9,10 @@ export default function SubmitButton({ title, style }) {
     <div className="btn_box">
       <button type="submit" disabled={pending} className={style}>
         {title}
+        {pending && (
+          <div className="spinner-border spinner-border-sm ms-2"></div>
+        )}
       </button>
-      {pending && <div className="spinner-border spinner-border-sm ms-2"></div>}
     </div>
   );
 }
