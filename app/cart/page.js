@@ -6,17 +6,25 @@ import {
   decrement,
   increment,
   removeFromCart,
+  totalAmount,
+  totalAmountCart,
 } from "@/redux/slices/cartSlice";
 import { getBlurDataURL, numberFormat } from "@/utils/helper";
 import Image from "next/image";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 export default function CartPage() {
+  const [coupon, setCoupon] = useState({ code: "", percent: 0 });
   const dispatch = useDispatch();
   const state = useSelector((state) => state.shoppingCart);
+  const totalAmount = useSelector(totalAmountCart);
 
-  console.log(state.cart);
+  useEffect(() => {
+    // const total = showTotalAmount();
+    console.log(coupon);
+  }, [coupon]);
 
   return (
     <>
@@ -129,7 +137,7 @@ export default function CartPage() {
                 </div>
 
                 <div className="row mt-4">
-                  <Coupon />
+                  <Coupon setCoupon={setCoupon} />
                   <div className="col-12 col-md-6 d-flex justify-content-end align-items-baseline">
                     <div>انتخاب آدرس</div>
                     <select
@@ -154,18 +162,31 @@ export default function CartPage() {
                         <ul className="list-group mt-4">
                           <li className="list-group-item d-flex justify-content-between">
                             <div>مجموع قیمت :</div>
-                            <div>535,000 تومان</div>
+                            <div> {numberFormat(totalAmount)} تومان</div>
                           </li>
                           <li className="list-group-item d-flex justify-content-between">
                             <div>
                               تخفیف :
-                              <span className="text-danger ms-1">10%</span>
+                              <span className="text-danger ms-1">
+                                {coupon.percent}%
+                              </span>
                             </div>
-                            <div className="text-danger">53,500 تومان</div>
+                            <div className="text-danger">
+                              {numberFormat(
+                                (totalAmount * coupon.percent) / 100
+                              )}
+                              تومان
+                            </div>
                           </li>
                           <li className="list-group-item d-flex justify-content-between">
                             <div>قیمت پرداختی :</div>
-                            <div>481,500 تومان</div>
+                            <div>
+                              {numberFormat(
+                                totalAmount -
+                                  (totalAmount * coupon.percent) / 100
+                              )}
+                              تومان
+                            </div>
                           </li>
                         </ul>
                         <button className="user_option btn-auth mt-4">

@@ -40,9 +40,25 @@ export const cartSilce = createSlice({
     clearCart: (state) => {
       state.cart = [];
     },
+    // totalAmount: (state, action) => {
+    //   state.cart.reduce((total, product) => {
+    //     return product.is_sale
+    //       ? total + product.sale_price * product.qty
+    //       : total + product.price * product.qty;
+    //   }, 0);
+    // },   //we cant use this in cartSlice reducers as an action we should define another function for this
   },
 });
 
 export const { addToCart, removeFromCart, clearCart, increment, decrement } =
   cartSilce.actions;
 export const cartReducer = cartSilce.reducer;
+
+export const totalAmountCart = ({ shoppingCart }) => {
+  return shoppingCart.cart.reduce((total, product) => {
+    // console.log(product);
+    return product.is_sale
+      ? total + product.sale_price * product.qty
+      : total + product.price * product.qty;
+  }, 0);
+};

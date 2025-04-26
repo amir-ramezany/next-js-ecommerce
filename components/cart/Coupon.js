@@ -6,12 +6,18 @@ import { checkCoupon } from "@/actions/cart";
 import { useEffect } from "react";
 import { toast } from "react-toastify";
 
-export default function Coupon() {
+export default function Coupon({ setCoupon }) {
   const [state, formAction] = useFormState(checkCoupon, {});
 
   useEffect(() => {
     toast(state?.message, { type: `${state?.status}` });
-  }, [state]);
+    if (state.status === "success") {
+      setCoupon({
+        code: state?.code,
+        percent: state?.percent,
+      });
+    }
+  }, [state, setCoupon]);
   return (
     <form action={formAction} className="col-12 col-md-6">
       <div className="input-group mb-3">
@@ -23,9 +29,6 @@ export default function Coupon() {
         />
         <div className="h-100">
           <SubmitButton title="اعمال کد تخفیف" style="input-group-text" />
-          {/* <button className="input-group-text" type="submit">
-            اعمال کد تخفیف
-          </button> */}
         </div>
       </div>
     </form>
