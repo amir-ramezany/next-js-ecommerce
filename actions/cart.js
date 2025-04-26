@@ -1,6 +1,6 @@
 "use server";
 
-import { postFetch } from "@/utils/fetch";
+import { getFetch, postFetch } from "@/utils/fetch";
 import { handleError } from "@/utils/helper";
 import { cookies } from "next/headers";
 
@@ -34,4 +34,12 @@ async function checkCoupon(state, formData) {
   }
 }
 
-export { checkCoupon };
+async function getAddresses() {
+  const token = cookies().get("token");
+  const data = await getFetch("/user/addresses", {
+    Authorization: `Bearer ${token.value}`,
+  });
+  return data;
+}
+
+export { checkCoupon, getAddresses };

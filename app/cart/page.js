@@ -1,5 +1,6 @@
 "use client";
 
+import Address from "@/components/cart/Address";
 import Coupon from "@/components/cart/Coupon";
 import {
   clearCart,
@@ -17,6 +18,8 @@ import { useDispatch, useSelector } from "react-redux";
 
 export default function CartPage() {
   const [coupon, setCoupon] = useState({ code: "", percent: 0 });
+  const [addressId, setAddressId] = useState(null);
+
   const dispatch = useDispatch();
   const state = useSelector((state) => state.shoppingCart);
   const totalAmount = useSelector(totalAmountCart);
@@ -139,18 +142,7 @@ export default function CartPage() {
                 <div className="row mt-4">
                   <Coupon setCoupon={setCoupon} />
                   <div className="col-12 col-md-6 d-flex justify-content-end align-items-baseline">
-                    <div>انتخاب آدرس</div>
-                    <select
-                      style={{ width: "200px" }}
-                      className="form-select ms-3"
-                      aria-label="Default select example"
-                    >
-                      {/* <option selected>منزل</option>
-                    <option defaultValue="1">محل کار</option> */}
-                    </select>
-                    <a href="profile.html" className="btn btn-primary">
-                      ایجاد آدرس
-                    </a>
+                    <Address setAddressId={setAddressId} />
                   </div>
                 </div>
 
