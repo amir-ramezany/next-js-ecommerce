@@ -73,4 +73,20 @@ async function payment(state, formData) {
   }
 }
 
-export { checkCoupon, getAddresses, payment };
+async function paymentVerify(trackId, status) {
+  const data = await postFetch("/payment/verify", { token: trackId, status });
+
+  if (data.status === "success") {
+    return {
+      status: data.status,
+      payment: data.data,
+    };
+  } else {
+    return {
+      status: data.status,
+      message: handleError(data.message),
+    };
+  }
+}
+
+export { checkCoupon, getAddresses, payment, paymentVerify };
