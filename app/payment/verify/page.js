@@ -15,10 +15,14 @@ export default function PaymentVerifyPage() {
   const [loading, setLoading] = useState(true);
   const dispatch = useDispatch();
 
+  console.log(payment);
+
   useEffect(() => {
     const verify = async () => {
       const data = await paymentVerify(trackId, status);
-      setPayment(data.payment);
+      if (data.payment.status) {
+        setPayment(data.payment);
+      }
       setLoading(false);
     };
 
@@ -53,7 +57,7 @@ export default function PaymentVerifyPage() {
                         پرداخت شما با موفقیت انجام شد
                       </h5>
                     ) : (
-                      <h5 className="mt-3 text-danger">{payment.error}</h5>
+                      <h5 className="mt-3 text-danger"> پرداخت ناموق بود </h5>
                     )}
                   </div>
                   <div className="d-flex justify-content-between">
