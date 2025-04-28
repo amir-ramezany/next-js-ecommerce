@@ -21,8 +21,8 @@ export default function CheckOtpForm() {
   }, [stateOtp]);
 
   return (
-    <div className="card-body">
-      <div className="form_container">
+    <div className="card-body ">
+      <div className="form_container  position-relative ">
         <form action={formActionOtp}>
           <div className="mb-3">
             <label className="form-label"> کد تایید </label>

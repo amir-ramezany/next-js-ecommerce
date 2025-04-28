@@ -38,7 +38,7 @@ export default function ResendOtpButton() {
   }, [seconds, minutes]);
 
   return (
-    <div className="resend-opt-btn">
+    <div className="resend-opt-btn ">
       {seconds > 0 || minutes > 0 ? (
         <div className="mb-1 me-3 pt-3">
           {minutes < 10 ? `0${minutes}` : minutes}:

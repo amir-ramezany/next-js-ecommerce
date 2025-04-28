@@ -1321,8 +1321,8 @@ a:focus {
 
 .resend-opt-btn {
   position: absolute;
-  left: 15px;
-  bottom: 16px;
+  left: 0px;
+  bottom: 0px;
   font-size: larger;
   font-weight: bold;
 }
