@@ -1134,7 +1134,7 @@ a:focus {
   -khtml-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
-  user-select: none; 
+  user-select: none;
   border: none;
   outline: none;
 }
@@ -1317,4 +1317,12 @@ a:focus {
   position: absolute;
   left: 16px;
   bottom: 18px;
+}
+
+.resend-opt-btn {
+  position: absolute;
+  left: 15px;
+  bottom: 16px;
+  font-size: larger;
+  font-weight: bold;
 }
