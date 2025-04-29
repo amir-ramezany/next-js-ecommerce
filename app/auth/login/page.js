@@ -2,10 +2,17 @@
 
 import CheckOtpForm from "@/components/auth/CheckOtpForm";
 import LoginForm from "@/components/auth/LoginForm";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function LoginPage() {
   const [step, setStep] = useState(0); // 0 -> loginform card  //1 -> otpform card
+  const [otp, setOtp] = useState(null);
+  useEffect(() => {
+    if (otp) {
+      alert(`کد تایید : ${otp}`);
+    }
+  }, [otp]);
+
   return (
     <section className="auth_section book_section">
       <div className="container">
@@ -39,7 +46,7 @@ export default function LoginPage() {
               </div>
             </div> */}
             <div className="card">
-              {step === 0 && <LoginForm setStep={setStep} />}
+              {step === 0 && <LoginForm setStep={setStep} setOtp={setOtp} />}
               {step === 1 && <CheckOtpForm />}
             </div>
           </div>

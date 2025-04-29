@@ -33,6 +33,7 @@ async function login(stateLogin, formData) {
     return {
       status: data.status,
       message: "کد تایید با موفقیت ارسال شد.",
+      otp: data.data.OTPCode,
     };
   } else {
     return {

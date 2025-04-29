@@ -5,12 +5,15 @@ import { useEffect } from "react";
 import { useFormState } from "react-dom";
 import { toast } from "react-toastify";
 
-export default function LoginForm({ setStep }) {
+export default function LoginForm({ setStep, setOtp }) {
   const [stateLogin, formActionLogin] = useFormState(login, {});
 
   useEffect(() => {
     toast(stateLogin?.message, { type: stateLogin?.status });
-    if (stateLogin?.status === "success") setStep(1);
+    if (stateLogin?.status === "success") {
+      setStep(1);
+      setOtp(stateLogin?.otp);
+    }
   }, [stateLogin]);
   return (
     <div className="card-body">
