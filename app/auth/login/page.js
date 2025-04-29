@@ -3,12 +3,22 @@
 import CheckOtpForm from "@/components/auth/CheckOtpForm";
 import LoginForm from "@/components/auth/LoginForm";
 import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 
 export default function LoginPage() {
   const [step, setStep] = useState(0); // 0 -> loginform card  //1 -> otpform card
   const [otp, setOtp] = useState(null);
   useEffect(() => {
     if (otp) {
+      //copied to clipboard automatically
+      navigator.clipboard
+        .writeText(otp)
+        .then(() => {
+          toast.success("کد تایید در کلیپبورد کپی شد");
+        })
+        .catch((err) => {
+          console.error("Failed to copy: ", err);
+        });
       alert(`کد تایید : ${otp}`);
     }
   }, [otp]);
