@@ -24,11 +24,6 @@ export default function CartPage() {
   const state = useSelector((state) => state.shoppingCart);
   const totalAmount = useSelector(totalAmountCart);
 
-  useEffect(() => {
-    // const total = showTotalAmount();
-    console.log(coupon);
-  }, [coupon]);
-
   return (
     <>
       {state.cart.length !== 0 ? (

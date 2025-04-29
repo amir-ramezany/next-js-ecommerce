@@ -13,14 +13,11 @@ export const cartSilce = createSlice({
     addToCart: (state, action) => {
       const { product, qty } = action.payload;
       state.cart = [...state.cart, { ...product, qty: qty }];
-      console.log(state.cart);
     },
     removeFromCart: (state, action) => {
       state.cart = state.cart.filter((p) => p.id !== action.payload);
     },
     increment: (state, action) => {
-      // console.log(action.payload);
-
       // state.cart = state.cart.map((item) => {
       //   if (item.id === action.payload.id) {
       //     return { ...item, qty: item.qty + 1 };
@@ -56,7 +53,6 @@ export const cartReducer = cartSilce.reducer;
 
 export const totalAmountCart = ({ shoppingCart }) => {
   return shoppingCart.cart.reduce((total, product) => {
-    // console.log(product);
     return product.is_sale
       ? total + product.sale_price * product.qty
       : total + product.price * product.qty;

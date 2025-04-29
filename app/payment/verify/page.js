@@ -15,8 +15,6 @@ export default function PaymentVerifyPage() {
   const [loading, setLoading] = useState(true);
   const dispatch = useDispatch();
 
-  console.log(payment);
-
   useEffect(() => {
     const verify = async () => {
       const data = await paymentVerify(trackId, status);
