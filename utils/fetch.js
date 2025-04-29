@@ -1,4 +1,4 @@
-const baseUrl = "http://localhost:8000/api";
+const baseUrl = process.env.API_URL;
 
 const getFetch = async (url, headers = {}) => {
   const res = await fetch(baseUrl + url, {
