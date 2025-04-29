@@ -7,6 +7,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useContext } from "react";
 import { useSelector } from "react-redux";
+import { toast } from "react-toastify";
 
 export default function Header() {
   const pathName = usePathname();
@@ -81,7 +82,13 @@ export default function Header() {
                   </li>
                 </ul>
                 <div className="user_option">
-                  <Link className="cart_link position-relative" href="/cart">
+                  <Link
+                    className="cart_link position-relative"
+                    href="/cart"
+                    onClick={() =>
+                      !user && toast.error("ابتدا وارد حساب کاربری شوید")
+                    }
+                  >
                     <i className="bi bi-cart-fill text-white fs-5"></i>
                     <span className="position-absolute top-0 translate-middle badge rounded-pill">
                       {state.cart.length}
